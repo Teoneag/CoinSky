@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme1,
       themeMode: context.watch<ThemeController>().getThemeMode(),
       routes: routes,
+      // home: HomePage(),
     );
   }
 }

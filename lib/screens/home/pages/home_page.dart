@@ -5,17 +5,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            children: const [
-              Text('Home'),
-            ],
-          ),
-        ],
-      ),
+    return const Center(
+      child: Text('Home'),
     );
   }
 }
