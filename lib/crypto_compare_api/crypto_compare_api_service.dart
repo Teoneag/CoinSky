@@ -1,16 +1,59 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '/crypto_compare_api/coin_model.dart';
+class Coin {
+  String name;
+  String symbol;
+  String imageUrl;
+  double marketCap;
+  double marketCap24h;
+  double price;
+  double priceChange24h;
+
+  Coin({
+    required this.name,
+    required this.symbol,
+    required this.imageUrl,
+    this.marketCap = 0,
+    this.marketCap24h = 0,
+    this.price = 0,
+    this.priceChange24h = 0,
+  });
+
+  factory Coin.fromJson(Map<String, dynamic> json) {
+    try {
+      final coinInfo = json['CoinInfo'];
+      if (!json.containsKey('RAW')) {
+        return Coin(
+          name: coinInfo['FullName'],
+          symbol: coinInfo['Name'],
+          imageUrl: 'https://www.cryptocompare.com${coinInfo['ImageUrl']}',
+        );
+      }
+      final rawUSD = json['RAW']['USD'];
+      return Coin(
+        name: coinInfo['FullName'],
+        symbol: coinInfo['Name'],
+        imageUrl: 'https://www.cryptocompare.com${coinInfo['ImageUrl']}',
+        marketCap: rawUSD['MKTCAP'].toDouble(),
+        marketCap24h: rawUSD['TOTALVOLUME24H'].toDouble(),
+        price: rawUSD['PRICE'].toDouble(),
+        priceChange24h: rawUSD['CHANGEPCT24HOUR'].toDouble(),
+      );
+    } catch (e) {
+      throw Exception('We got this error trying to parse the data: $e');
+    }
+  }
+}
 
 class APIService {
   static const String _baseUrl =
-      'https://min-api.cryptocompare.com/data/top/mktcapfull?tsym=USD&limit=20';
+      'https://min-api.cryptocompare.com/data/top/mktcapfull?tsym=USD';
 
   static Future<List<Coin>> getTopCoins() async {
     try {
-      final response = await http
-          .get(Uri.parse(_baseUrl), headers: {'Accept': 'application/json'});
+      final response = await http.get(Uri.parse('$_baseUrl&limit=20'),
+          headers: {'Accept': 'application/json'});
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -22,6 +65,30 @@ class APIService {
       }
     } catch (e) {
       throw Exception('Failed to load data from API');
+    }
+  }
+
+  static Future<List<Coin>> getCoins(int page, int limit) async {
+    print(
+        'Getting $limit coins from page $page, this is the url: $_baseUrl&limit=$limit&page=$page');
+    try {
+      final response = await http.get(
+          Uri.parse('$_baseUrl&limit=$limit&page=$page'),
+          headers: {'Accept': 'application/json'});
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        // print('This is the data i got: $data');
+        final List<dynamic> coinsData = data['Data'];
+        final coins = coinsData.map((json) => Coin.fromJson(json)).toList();
+        return coins;
+      } else {
+        throw Exception(
+            'Failed to load data from API, statusCode was different from 200');
+      }
+    } catch (e) {
+      throw Exception(
+          'Failed to load data from API, the following error was thrown: $e');
     }
   }
 }

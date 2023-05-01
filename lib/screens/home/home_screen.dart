@@ -20,6 +20,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
     return Scaffold(
       appBar: const MyAppBar(),
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: pages,
         onPageChanged: (index) {

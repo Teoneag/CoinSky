@@ -64,6 +64,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             const PopupMenuItem<String>(
+              child: ListTile(
+                leading: Icon(Icons.refresh),
+                title: Text('Refresh'),
+              ),
+            ),
+            const PopupMenuItem<String>(
               value: Routes.aboutUs,
               child: ListTile(
                 leading: Icon(Icons.info),

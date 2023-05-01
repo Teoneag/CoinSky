@@ -8,6 +8,7 @@
 5. U can coppy trade like on etoro
 
 ## TO DO
+-1. Add the sparkline to the list
 0. Aparences
 - on the more menu  from the appbar, make it smaller (horizontal) 
 1. Theme
@@ -23,6 +24,8 @@
 9. Delete the background of every coin
 10. Is 24hmarketcap the same as 24h volume?
 11. Handle exceptions
+12. color red, green and gray things that change
+13. enable swiping between pages (physics scroll...)
 # Maybe usefull
 
 - visualDensity: VisualDensity.adaptivePlatformDensity, (in ThemeData)
