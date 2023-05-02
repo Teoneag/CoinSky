@@ -8,9 +8,10 @@
 5. U can coppy trade like on etoro
 
 ## TO DO
--1. Add the sparkline to the list
-0. Aparences
-- on the more menu  from the appbar, make it smaller (horizontal) 
+Make coin page (stats + graph of the coin + like the coin)
+login + firebase
+Virtual portofolio + virtual trades
+0. Add the sparkline to the list
 1. Theme
 - Add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye
 - Make the theme button from appBar animate: sun -> moon
@@ -26,6 +27,9 @@
 11. Handle exceptions
 12. color red, green and gray things that change
 13. enable swiping between pages (physics scroll...)
+14. Theme is in the database
+14. HomePage: Sparkline, Refresh, tableHead, sort by table head item, at 743. it gets stuck, i should remove the bg colour of the icon, 9-10, 99-100 they are not alineated, when u get to the end of the table
+15. Add the coin vs coin on exchange: https://min-api.cryptocompare.com/data/v2/pair/mapping/exchange/fsym?exchangeFsym=BTC&limit=1000&exchange=binance
 # Maybe usefull
 
 - visualDensity: VisualDensity.adaptivePlatformDensity, (in ThemeData)

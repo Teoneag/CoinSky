@@ -8,6 +8,7 @@ import '/screens/notification_screen.dart';
 import '/screens/profile_screen.dart';
 import '/screens/settings_screen.dart';
 import '/screens/about_us_screen.dart';
+import '/screens/home/coin_screen.dart';
 
 class Routes {
   static const String login = '/login';
@@ -19,6 +20,7 @@ class Routes {
   static const String profile = '/profile';
   static const String settings = '/settings';
   static const String aboutUs = '/about_us';
+  static const String coin = '/coin';
 }
 
 final Map<String, WidgetBuilder> routes = {
@@ -30,4 +32,5 @@ final Map<String, WidgetBuilder> routes = {
   Routes.profile: (context) => const ProfileScreen(),
   Routes.settings: (context) => const SettingsScreen(),
   Routes.aboutUs: (context) => const AboutUsScreen(),
+  Routes.coin: (context) => const CoinScreen(),
 };
