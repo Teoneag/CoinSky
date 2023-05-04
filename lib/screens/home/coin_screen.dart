@@ -41,7 +41,7 @@ class _CoinScreenState extends State<CoinScreen> {
     final Coin coin = args['coin'];
     return Scaffold(
       appBar: AppBar(
-        title: Text(coin.name),
+        title: Text(coin.symbol),
       ),
       body: Column(
         children: [

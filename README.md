@@ -1,4 +1,4 @@
-# coin_sky_0
+# CoinSky
 
 ## Goals for this app
 1. A wallet, where u can do everything related to crypto: view, buy, sell, use leverage, learn
@@ -8,34 +8,53 @@
 5. U can coppy trade like on etoro
 
 ## TO DO
-Make coin page (stats + graph of the coin + like the coin)
-login + firebase
-Virtual portofolio + virtual trades
-0. Add the sparkline to the list
-1. Theme
-- Add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye
-- Make the theme button from appBar animate: sun -> moon
-2. Make different languages available
-3. Add different log in methodes
-4. Make a responsive layout
-5. Hide the notificationbar
-6. when u tap on the icon of the app, u go to the home page of the home screen
-7. add reset to settings
-8. Update coins every 1 second or when u refresh (refersh indicator)
-9. Delete the background of every coin
-10. Is 24hmarketcap the same as 24h volume?
-11. Handle exceptions
-12. color red, green and gray things that change
-13. enable swiping between pages (physics scroll...)
-14. Theme is in the database
-14. HomePage: Sparkline, Refresh, tableHead, sort by table head item, at 743. it gets stuck, i should remove the bg colour of the icon, 9-10, 99-100 they are not alineated, when u get to the end of the table
-15. Add the coin vs coin on exchange: https://min-api.cryptocompare.com/data/v2/pair/mapping/exchange/fsym?exchangeFsym=BTC&limit=1000&exchange=binance
-16. Add loading screen + splash screen
-17. Add username check + mail check + password check?
-18. In settings add delete user
-19. After register, autocomplete mail in login
-# Maybe usefull
+### on firestoreMethods
+- open method (buy/sell)
+- close method
+- get all positions
+- wallet page
+- add to the home page: ballance, positions
+make the coin page look ok
+Go on every page and add minimum text + functionality
 
+### Theme
+- add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye
+- make the theme button from appBar animate: sun -> moon
+- color red, green and gray things that change
+- add the theme in the database
+- add loading screen + splash screen
+### General
+- make a responsive layout
+- make different languages available
+- hide the notificationbar
+- Handle exceptions
+### User
+- add different log in methodes
+- add username check + mail check + password check?
+- user img (display it instead of the user button on the appbar)
+- after register, autocomplete mail in login
+### List view
+- Is 24hmarketcap the same as 24h volume?
+- update coins every 1 second or when u refresh (refersh indicator) + refresh button from app bar
+- add the sparkline to the list
+- sort by table head item
+- at 743. it gets stuck
+- i should remove the bg colour of the icon
+- 9-10, 99-100 they are not alineated
+- when u get to the end of the table, dispay table end
+- add the coin vs coin on exchange: https://min-api.cryptocompare.com/data/v2/pair/mapping/exchange/fsym?exchangeFsym=BTC&limit=1000&exchange=binance
+- change error coin img/handle it differently
+- add an i button after the 'end of list', show: To add a coin to favorites: Tap on a coin on the trades page, and then star it.
+### Positions
+- add create, delete, modify virtual portofolio
+- add real money positions
+### Settings page
+- theme
+- user: log out, delete account
+### Home page
+- Add welcome/welcome back
+ 
+# Maybe usefull
 - visualDensity: VisualDensity.adaptivePlatformDensity, (in ThemeData)
 - elevation (AppBar)
 - ChangeNotifierProvider

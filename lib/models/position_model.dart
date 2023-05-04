@@ -23,6 +23,3 @@ class Position {
     required this.fees,
   });
 }
-
-
-// TODO: make storage_methods or smth for the position and the user models

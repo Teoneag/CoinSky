@@ -24,3 +24,5 @@ showSnackBar(String content, BuildContext context) {
 class S {
   static const users = 'users';
 }
+
+enum coinsListType { all, liked }

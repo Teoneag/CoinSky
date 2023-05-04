@@ -16,7 +16,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: SvgPicture.asset(
           'assets/logo_CoinSky_1_2.svg',
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed(Routes.aboutUs);
+        },
         iconSize: 120,
       ),
       actions: [
