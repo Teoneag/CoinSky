@@ -1,3 +1,4 @@
+import 'package:coin_sky_0/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
 
 import '/screens/login_screen.dart';
@@ -11,10 +12,11 @@ import '/screens/about_us_screen.dart';
 import '/screens/home/coin_screen.dart';
 
 class Routes {
+  static const String loading = '/loading';
   static const String login = '/login';
   static const String register = '/register';
   // static const String verifyEmail = '/verify_email';
-  static const String home = '/';
+  static const String home = '/home';
   static const String help = '/help';
   static const String notifications = '/notifications';
   static const String profile = '/profile';
@@ -33,4 +35,5 @@ final Map<String, WidgetBuilder> routes = {
   Routes.settings: (context) => const SettingsScreen(),
   Routes.aboutUs: (context) => const AboutUsScreen(),
   Routes.coin: (context) => const CoinScreen(),
+  Routes.loading: (context) => const LoadingScreen(),
 };

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '/utils/routes.dart';
 import '/utils/theme.dart';
+import '/firebase/auth_methods.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});
@@ -38,8 +39,37 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.person),
         ),
         PopupMenuButton<String>(
-          onSelected: (value) {
-            Navigator.of(context).pushNamed(value);
+          onSelected: (value) async {
+            switch (value) {
+              case 'logout':
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Log out'),
+                      content: const Text('Are you sure u want to log out?'),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Cancel')),
+                        TextButton(
+                            onPressed: () async {
+                              await AuthMethdods().signOut();
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  Routes.login, (route) => false);
+                            },
+                            child: const Text('Log out')),
+                      ],
+                    );
+                  },
+                );
+
+                break;
+              default:
+                Navigator.of(context).pushNamed(value);
+            }
           },
           itemBuilder: (BuildContext context) => [
             const PopupMenuItem<String>(
@@ -67,6 +97,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: ListTile(
                 leading: Icon(Icons.refresh),
                 title: Text('Refresh'),
+              ),
+            ),
+            const PopupMenuItem<String>(
+              value: 'logout',
+              child: ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Log out'),
               ),
             ),
             const PopupMenuItem<String>(

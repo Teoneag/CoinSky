@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '/crypto_compare_api/crypto_compare_api_service.dart';
+import '/widgets/favorite_button.dart';
+import '/models/coin_model.dart';
 
 class CoinScreen extends StatefulWidget {
   const CoinScreen({super.key});
@@ -55,10 +56,7 @@ class _CoinScreenState extends State<CoinScreen> {
                 onPressed: () {},
                 child: const Text('Sell'),
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Star(favorite)'),
-              ),
+              FavoriteButton(coinSymbol: coin.symbol),
             ],
           ),
           Expanded(

@@ -1,7 +1,7 @@
-import 'package:coin_sky_0/screens/home/Coin_screen.dart';
 import 'package:coin_sky_0/utils/routes.dart';
 import 'package:flutter/material.dart';
 
+import '/models/coin_model.dart';
 import '/utils/utils.dart';
 import '/crypto_compare_api/crypto_compare_api_service.dart';
 
@@ -27,10 +27,12 @@ class _HomePageState extends State<HomePage> {
     if (_isLoading) return;
     _isLoading = true;
     final newItems = await APIService.getCoins(_page, 14);
-    setState(() {
-      _page++;
-      _coins.addAll(newItems);
-    });
+    if (mounted) {
+      setState(() {
+        _page++;
+        _coins.addAll(newItems);
+      });
+    }
     _isLoading = false;
   }
 
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                           style: Theme.of(context).textTheme.bodyMedium),
                     ],
                   )),
-              Text('Mkt cap/24h V',
+              Text('MktCap/24hV',
                   style: Theme.of(context).textTheme.bodyMedium),
               const Spacer(),
               Text('Price / 24h',
