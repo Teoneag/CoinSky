@@ -56,7 +56,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                             child: const Text('Cancel')),
                         TextButton(
                             onPressed: () async {
-                              await AuthMethdods().signOut();
+                              await AuthMethdods.signOut();
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                   Routes.login, (route) => false);
                             },

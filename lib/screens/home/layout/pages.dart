@@ -9,7 +9,7 @@ import '/screens/home/pages/learn_page.dart';
 final List<Widget> pages = [
   const HomePage(),
   const PortfolioPage(),
-  TradePage(),
+  const TradePage(),
   const EarnPage(),
   const LearnPage(),
 ];

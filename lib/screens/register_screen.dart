@@ -15,6 +15,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailC = TextEditingController();
   final TextEditingController _passC = TextEditingController();
+  final TextEditingController _nameC = TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -28,9 +29,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() {
       _isLoading = true;
     });
-    String res = await AuthMethdods().registerUser(
+    String res = await AuthMethdods.registerUser(
       email: _emailC.text,
       password: _passC.text,
+      username: _nameC.text,
     );
     setState(() {
       _isLoading = false;
@@ -62,16 +64,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 20,
               ),
-              // text field input for email
+              TextField(
+                controller: _nameC,
+                decoration:
+                    const InputDecoration(hintText: 'Enter your username'),
+              ),
               TextField(
                 controller: _emailC,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(hintText: 'Enter your email'),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              //text field input for password
               TextField(
                 controller: _passC,
                 keyboardType: TextInputType.visiblePassword,
@@ -82,7 +84,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 20,
               ),
-              // login button
               TextButton(
                 onPressed: registerUser,
                 child: _isLoading

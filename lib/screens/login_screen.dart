@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
     });
-    String res = await AuthMethdods().loginUser(_emailC.text, _passC.text);
+    String res = await AuthMethdods.loginUser(_emailC.text, _passC.text);
     if (res == success) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(Routes.home, (route) => false);

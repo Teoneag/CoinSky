@@ -30,6 +30,10 @@ Virtual portofolio + virtual trades
 14. Theme is in the database
 14. HomePage: Sparkline, Refresh, tableHead, sort by table head item, at 743. it gets stuck, i should remove the bg colour of the icon, 9-10, 99-100 they are not alineated, when u get to the end of the table
 15. Add the coin vs coin on exchange: https://min-api.cryptocompare.com/data/v2/pair/mapping/exchange/fsym?exchangeFsym=BTC&limit=1000&exchange=binance
+16. Add loading screen + splash screen
+17. Add username check + mail check + password check?
+18. In settings add delete user
+19. After register, autocomplete mail in login
 # Maybe usefull
 
 - visualDensity: VisualDensity.adaptivePlatformDensity, (in ThemeData)

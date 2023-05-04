@@ -20,3 +20,7 @@ showSnackBar(String content, BuildContext context) {
     ),
   );
 }
+
+class S {
+  static const users = 'users';
+}

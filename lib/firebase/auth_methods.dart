@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '/models/user_model.dart' as model;
-// import 'dart:typed_data';
 
 import '/utils/utils.dart';
 
 class AuthMethdods {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final _uid = _auth.currentUser!.uid;
 
-  Future<String> loginUser(email, password) async {
+  static Future<String> loginUser(email, password) async {
     String res = "Some error occured";
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
@@ -28,9 +28,10 @@ class AuthMethdods {
     return res;
   }
 
-  Future<String> registerUser({
+  static Future<String> registerUser({
     required String email,
     required String password,
+    required String username,
   }) async {
     String res = "Some error occured";
     try {
@@ -42,6 +43,7 @@ class AuthMethdods {
         model.User user = model.User(
           email: email,
           uid: cred.user!.uid,
+          username: username,
           favouriteCoins: [],
         );
         await _firestore
@@ -58,17 +60,12 @@ class AuthMethdods {
     return res;
   }
 
-  Future<void> signOut() async {
+  static Future<void> signOut() async {
     await _auth.signOut();
   }
 
-  // // get user details
-  // Future<model.User> getUserDetails() async {
-  //   User currentUser = _auth.currentUser!;
-
-  //   DocumentSnapshot snap =
-  //       await _firestore.collection('users').doc(currentUser.uid).get();
-
-  //   return model.User.fromSnap(snap);
-  // }
+  static Future<model.User> getCurrentUser() async {
+    final snapshot = await _firestore.collection(S.users).doc(_uid).get();
+    return model.User.fromSnap(snapshot);
+  }
 }
