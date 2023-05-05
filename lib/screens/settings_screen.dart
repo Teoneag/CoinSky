@@ -10,8 +10,8 @@ class SettingsScreen extends StatelessWidget {
         title: const Text('Settings'),
       ),
       body: Column(
-        children: [
-          const Text('Settings'),
+        children: const [
+          Text('Settings'),
         ],
       ),
     );

@@ -1,12 +1,12 @@
-import 'package:coin_sky_0/utils/routes.dart';
+import 'package:coin_sky_0/screens/home/coin_screen.dart';
 import 'package:flutter/material.dart';
-
-import '/models/coin_model.dart';
 import '/utils/utils.dart';
+import '/utils/routes.dart';
+import '/models/coin_model.dart';
 import '/crypto_compare_api/crypto_compare_api_service.dart';
 
 class CoinsList extends StatefulWidget {
-  final coinsListType type;
+  final CoinsListType type;
   const CoinsList({super.key, required this.type});
 
   @override
@@ -81,8 +81,13 @@ class _CoinsListState extends State<CoinsList> {
                 final coin = _coins[index];
                 return InkWell(
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(Routes.coin, arguments: {'coin': coin});
+                    // Navigator.of(context)
+                    //     .pushNamed(Routes.coin, arguments: {'coin': coin});
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CoinScreen(coin: coin),
+                        ));
                   },
                   child: Padding(
                     padding:

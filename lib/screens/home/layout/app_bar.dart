@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
 import '/utils/routes.dart';
 import '/utils/theme.dart';
 import '/firebase/auth_methods.dart';

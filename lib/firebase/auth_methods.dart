@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '/models/user_model.dart' as model;
-
 import '/utils/utils.dart';
 
 class AuthMethdods {
@@ -44,7 +42,10 @@ class AuthMethdods {
           email: email,
           uid: cred.user!.uid,
           username: username,
-          favouriteCoins: [],
+          favouriteCoins: ['BTC', 'ETH'],
+          myCoins: [
+            {'USD': 1000.0},
+          ],
         );
         await _firestore
             .collection('users')
@@ -67,5 +68,16 @@ class AuthMethdods {
   static Future<model.User> getCurrentUser() async {
     final snapshot = await _firestore.collection(S.users).doc(_uid).get();
     return model.User.fromSnap(snapshot);
+  }
+
+  static Future<String> getUsername() async {
+    String res = "Some error occured";
+    try {
+      var snap = await _firestore.collection(S.users).doc(_uid).get();
+      res = model.User.fromSnap(snap).username;
+    } catch (e) {
+      return '$e';
+    }
+    return res;
   }
 }

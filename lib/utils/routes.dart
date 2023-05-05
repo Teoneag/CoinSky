@@ -1,6 +1,5 @@
-import 'package:coin_sky_0/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
-
+import '/screens/loading_screen.dart';
 import '/screens/login_screen.dart';
 import '/screens/register_screen.dart';
 import '/screens/help_screen.dart';
@@ -34,6 +33,6 @@ final Map<String, WidgetBuilder> routes = {
   Routes.profile: (context) => const ProfileScreen(),
   Routes.settings: (context) => const SettingsScreen(),
   Routes.aboutUs: (context) => const AboutUsScreen(),
-  Routes.coin: (context) => const CoinScreen(),
+  // Routes.coin: (context) => CoinScreen(coin: coin,),
   Routes.loading: (context) => const LoadingScreen(),
 };

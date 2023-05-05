@@ -10,7 +10,8 @@ class Coin {
   Coin({
     this.name,
     required this.symbol,
-    required this.imageUrl,
+    this.imageUrl =
+        'https://static-00.iconduck.com/assets.00/generic-cryptocurrency-icon-512x512-rl54g8zo.png',
     this.marketCap = 0,
     this.marketCap24h = 0,
     this.price = 0,
@@ -57,3 +58,8 @@ class Coin {
     }
   }
 }
+
+Coin usd = Coin(
+    symbol: 'USD',
+    imageUrl:
+        'https://www.pngall.com/wp-content/uploads/12/USD-PNG-Images.png');

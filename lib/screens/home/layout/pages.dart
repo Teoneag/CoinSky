@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '/screens/home/pages/home_page.dart';
 import '/screens/home/pages/portfolio_page.dart';
 import '/screens/home/pages/trade_page.dart';

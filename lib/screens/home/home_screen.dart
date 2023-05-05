@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'layout/app_bar.dart';
 import 'layout/bottom_nav_items.dart';
 import 'layout/pages.dart';

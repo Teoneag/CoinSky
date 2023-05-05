@@ -10,8 +10,8 @@ class AboutUsScreen extends StatelessWidget {
         title: const Text('About us'),
       ),
       body: Column(
-        children: [
-          const Text('About us'),
+        children: const [
+          Text('About us'),
         ],
       ),
     );

@@ -1,10 +1,9 @@
-import 'package:coin_sky_0/firebase/auth_methods.dart';
-import 'package:coin_sky_0/utils/routes.dart';
-import 'package:coin_sky_0/utils/utils.dart';
-import 'package:coin_sky_0/widgets/coins_list.dart';
 import 'package:flutter/material.dart';
-
+import '/utils/routes.dart';
+import '/utils/utils.dart';
 import '/models/user_model.dart' as model;
+import '/widgets/coins_list.dart';
+import '/firebase/auth_methods.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -41,22 +40,25 @@ class _HomePageState extends State<HomePage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: !_isLoading
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Welcome back',
-                            style: Theme.of(context).textTheme.titleLarge),
-                        TextButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Welcome back',
+                      style: Theme.of(context).textTheme.titleLarge),
+                  _isLoading
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(),
+                        )
+                      : TextButton(
                           onPressed: () {
                             Navigator.of(context).pushNamed(Routes.profile);
                           },
                           child: Text('@${_user.username}',
                               style: const TextStyle(fontSize: 20)),
                         ),
-                      ],
-                    )
-                  : const CircularProgressIndicator(),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20, bottom: 10),
@@ -82,7 +84,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(
               height: 300,
-              child: CoinsList(type: coinsListType.liked),
+              child: CoinsList(type: CoinsListType.liked),
             ),
             const Divider(),
             Padding(

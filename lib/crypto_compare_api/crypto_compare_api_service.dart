@@ -7,15 +7,14 @@ import '/models/coin_model.dart';
 class APIService {
   // https://min-api.cryptocompare.com/data/v2/pair/mapping/exchange/fsym?exchangeFsym=BTC&limit=1000&exchange=binance
   static Future<List<Coin>?> getCoins(
-      int page, int limit, coinsListType type) async {
+      int page, int limit, CoinsListType type) async {
     try {
       switch (type) {
-        case coinsListType.liked:
+        case CoinsListType.liked:
           final currentUser = await AuthMethdods.getCurrentUser();
           final favoriteCoins = currentUser.favouriteCoins;
           String url =
               'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${favoriteCoins.join(',')}&tsyms=USD';
-          print(url);
           final response = await http
               .get(Uri.parse(url), headers: {'Accept': 'application/json'});
           if (response.statusCode == 200) {
@@ -38,7 +37,6 @@ class APIService {
               .get(Uri.parse(url), headers: {'Accept': 'application/json'});
           if (response.statusCode == 200) {
             final data = json.decode(response.body);
-            print(data['Data']);
             final List<dynamic> coinsData = data['Data'];
             final coins =
                 coinsData.map((json) => Coin.fromJson1(json)).toList();

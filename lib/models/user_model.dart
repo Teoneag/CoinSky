@@ -4,18 +4,20 @@ const _uidS = 'uid';
 const _usrenameS = 'username';
 const _emailS = 'email';
 const _favouriteCoinsS = 'favouriteCoins';
+const _myCoinsS = 'myCoins';
 
 class User {
   final String uid;
   final String username;
   final String email;
   final List<String> favouriteCoins; // symbols of the coins
-
+  final List<Map<String, double>> myCoins;
   const User({
     required this.uid,
     required this.username,
     required this.email,
     required this.favouriteCoins,
+    required this.myCoins,
   });
 
   static User fromSnap(DocumentSnapshot snap) {
@@ -26,6 +28,8 @@ class User {
       email: snapshot[_emailS],
       favouriteCoins:
           (snapshot[_favouriteCoinsS] as List<dynamic>).cast<String>(),
+      myCoins:
+          (snapshot[_myCoinsS] as List<dynamic>).cast<Map<String, double>>(),
     );
   }
 
@@ -34,5 +38,6 @@ class User {
         _usrenameS: username,
         _emailS: email,
         _favouriteCoinsS: favouriteCoins,
+        _myCoinsS: myCoins,
       };
 }

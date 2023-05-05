@@ -1,5 +1,5 @@
-import 'package:coin_sky_0/utils/utils.dart';
 import 'package:flutter/material.dart';
+import '/utils/utils.dart';
 import '/widgets/coins_list.dart';
 
 class TradePage extends StatelessWidget {
@@ -8,7 +8,7 @@ class TradePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CoinsList(
-      type: coinsListType.all,
+      type: CoinsListType.all,
     );
   }
 }

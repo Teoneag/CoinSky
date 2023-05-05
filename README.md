@@ -9,12 +9,14 @@
 
 ## TO DO
 ### on firestoreMethods
-- open method (buy/sell)
-- close method
-- get all positions
+- show the chart for the right coin
+- reset virtual portofolio
+- buy + sell
 - wallet page
 - add to the home page: ballance, positions
+
 make the coin page look ok
+
 Go on every page and add minimum text + functionality
 
 ### Theme
@@ -23,6 +25,7 @@ Go on every page and add minimum text + functionality
 - color red, green and gray things that change
 - add the theme in the database
 - add loading screen + splash screen
+- delete the dot from the logo to make it centered when i need it
 ### General
 - make a responsive layout
 - make different languages available
@@ -33,6 +36,7 @@ Go on every page and add minimum text + functionality
 - add username check + mail check + password check?
 - user img (display it instead of the user button on the appbar)
 - after register, autocomplete mail in login
+- At the login and register screens, add some welcome text + option to skip loggin
 ### List view
 - Is 24hmarketcap the same as 24h volume?
 - update coins every 1 second or when u refresh (refersh indicator) + refresh button from app bar
@@ -53,7 +57,6 @@ Go on every page and add minimum text + functionality
 - user: log out, delete account
 ### Home page
 - Add welcome/welcome back
- 
 # Maybe usefull
 - visualDensity: VisualDensity.adaptivePlatformDensity, (in ThemeData)
 - elevation (AppBar)

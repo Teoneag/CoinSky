@@ -1,8 +1,7 @@
-import 'package:coin_sky_0/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '/utils/utils.dart';
+import '/utils/routes.dart';
 import '/firebase/auth_methods.dart';
 
 class RegisterScreen extends StatefulWidget {

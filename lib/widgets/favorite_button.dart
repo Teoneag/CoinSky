@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../firebase/firestore_methdos.dart';
+import '/firebase/firestore_methdos.dart';
 
 class FavoriteButton extends StatefulWidget {
   final String coinSymbol;
