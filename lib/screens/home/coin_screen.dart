@@ -12,42 +12,30 @@ class CoinScreen extends StatefulWidget {
 }
 
 class _CoinScreenState extends State<CoinScreen> {
-  late final TextEditingController _usdC;
-  late final TextEditingController _btcC;
-  double coin1 = 0.0;
-  double coin2 = 0.0;
+  late final TextEditingController _coin1C;
+  late final TextEditingController _coin2C;
+  double _coin1 = 0.0;
+  double _coin2 = 0.0;
   bool _isLoading = true;
 
   @override
   void initState() {
-    _usdC = TextEditingController(text: '0');
-    _btcC = TextEditingController(text: '0');
-    getInitialValues();
+    _coin2C = TextEditingController(text: '0.0');
+    _coin1C = TextEditingController(text: '0.0');
+    _fetchCoinValues();
     super.initState();
   }
 
   @override
   void dispose() {
-    _usdC.dispose();
-    _btcC.dispose();
+    _coin1C.dispose();
+    _coin2C.dispose();
     super.dispose();
   }
 
-  void _updateUsdValue(String value) {
-    double btc = double.tryParse(value) ?? 0.0;
-    double usd = btc * widget.coin.price;
-    _usdC.text = usd.toStringAsFixed(2);
-  }
-
-  void _updateBtcValue(String value) {
-    double usd = double.tryParse(value) ?? 0;
-    double btc = usd / widget.coin.price;
-    _btcC.text = btc.toStringAsFixed(4);
-  }
-
-  Future<void> getInitialValues() async {
-    coin1 = await FirestoreMethods.getCoinAmount(widget.coin.symbol) ?? 0.0;
-    coin2 = await FirestoreMethods.getCoinAmount('USD') ?? 0.0;
+  Future<void> _fetchCoinValues() async {
+    _coin1 = await FirestoreMethods.getCoinAmount(widget.coin.symbol) ?? 0.0;
+    _coin2 = await FirestoreMethods.getCoinAmount('USD') ?? 0.0;
     setState(() {
       _isLoading = false;
     });
@@ -72,14 +60,21 @@ class _CoinScreenState extends State<CoinScreen> {
                         padding: EdgeInsets.all(8.0),
                         child: CircularProgressIndicator(),
                       )
-                    : Text('$coin1 ${widget.coin.symbol} and $coin2 USD'),
+                    : Text('$_coin1 ${widget.coin.symbol} and $_coin2 USD'),
               ],
             ),
           ),
           Row(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await FirestoreMethods.makeTransaction(
+                    coinB: widget.coin.symbol,
+                    coinS: 'USD',
+                    valueCoinB: double.tryParse(_coin1C.text) ?? 0.0,
+                    valueCoinS: double.tryParse(_coin2C.text) ?? 0.0,
+                  );
+                },
                 child: Column(
                   children: [
                     Text('BUY ${widget.coin.symbol}'),
@@ -91,9 +86,13 @@ class _CoinScreenState extends State<CoinScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: TextFormField(
-                    controller: _btcC,
+                    controller: _coin1C,
                     keyboardType: TextInputType.number,
-                    onChanged: _updateUsdValue,
+                    onChanged: (x) {
+                      _coin2C.text =
+                          ((double.tryParse(x) ?? 0.0) * widget.coin.price)
+                              .toStringAsFixed(2);
+                    },
                     decoration: InputDecoration(
                       suffixText: widget.coin.symbol,
                     ),
@@ -105,9 +104,13 @@ class _CoinScreenState extends State<CoinScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: TextFormField(
-                    controller: _usdC,
+                    controller: _coin2C,
                     keyboardType: TextInputType.number,
-                    onChanged: _updateBtcValue,
+                    onChanged: (x) {
+                      _coin1C.text =
+                          ((double.tryParse(x) ?? 0.0) / widget.coin.price)
+                              .toStringAsFixed(4);
+                    },
                     decoration: const InputDecoration(
                       suffixText: '\$',
                     ),
@@ -115,7 +118,14 @@ class _CoinScreenState extends State<CoinScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await FirestoreMethods.makeTransaction(
+                    coinB: 'USD',
+                    coinS: widget.coin.symbol,
+                    valueCoinS: double.tryParse(_coin1C.text) ?? 0.0,
+                    valueCoinB: double.tryParse(_coin2C.text) ?? 0.0,
+                  );
+                },
                 child: Column(
                   children: [
                     Text('SELL ${widget.coin.symbol}'),

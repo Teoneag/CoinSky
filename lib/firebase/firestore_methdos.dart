@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uuid/uuid.dart';
-import '/models/transaction_model.dart';
-import '/models/coin_model.dart';
 import '/utils/utils.dart';
+import '/models/user_model.dart' as model;
+import '/models/transaction_model.dart';
 import '/firebase/auth_methods.dart';
 
 class FirestoreMethods {
@@ -41,15 +40,14 @@ class FirestoreMethods {
   }
 
   static Future<String> makeTransaction({
-    required Coin coinB,
-    required Coin coinS,
+    required String coinB,
+    required String coinS,
     required double valueCoinB,
     required double valueCoinS,
   }) async {
     String res = "Some error occured";
     try {
       final Trans trans = Trans(
-        uid: const Uuid().v1(),
         coinB: coinB,
         coinS: coinS,
         valueCoinB: valueCoinB,
@@ -62,11 +60,34 @@ class FirestoreMethods {
           .collection(S.trans)
           .doc()
           .set(trans.toJson());
+      await increaseCoinValue(coinSymbol: coinB, coinValue: valueCoinB);
+      await increaseCoinValue(coinSymbol: coinS, coinValue: -valueCoinS);
       res = success;
     } catch (e) {
       res = e.toString();
     }
     return res;
+  }
+
+  static Future<void> increaseCoinValue(
+      {required String coinSymbol, required double coinValue}) async {
+    try {
+      final myCoins = (await AuthMethdods.getCurrentUser()).myCoins;
+      final coinIndex =
+          myCoins.indexWhere((coin) => coin.containsKey(coinSymbol));
+      if (coinIndex != -1) {
+        myCoins[coinIndex][coinSymbol] =
+            (myCoins[coinIndex][coinSymbol] ?? 0) + coinValue;
+      } else {
+        myCoins.add({coinSymbol: coinValue});
+      }
+      await _firestore
+          .collection(S.users)
+          .doc(_uid)
+          .update({model.myCoinsS: myCoins});
+    } catch (e) {
+      print(e);
+    }
   }
 
   static Future<double?> getCoinAmount(String symbol) async {

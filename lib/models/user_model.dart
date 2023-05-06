@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-const _uidS = 'uid';
-const _usrenameS = 'username';
-const _emailS = 'email';
-const _favouriteCoinsS = 'favouriteCoins';
-const _myCoinsS = 'myCoins';
+const uidS = 'uid';
+const usrenameS = 'username';
+const emailS = 'email';
+const favouriteCoinsS = 'favouriteCoins';
+const myCoinsS = 'myCoins';
 
 class User {
   final String uid;
   final String username;
   final String email;
-  final List<String> favouriteCoins; // symbols of the coins
-  final List<Map<String, double>> myCoins;
+  final List favouriteCoins; // symbols of the coins
+  final List myCoins;
   const User({
     required this.uid,
     required this.username,
@@ -23,21 +23,19 @@ class User {
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
     return User(
-      uid: snapshot[_uidS],
-      username: snapshot[_usrenameS],
-      email: snapshot[_emailS],
-      favouriteCoins:
-          (snapshot[_favouriteCoinsS] as List<dynamic>).cast<String>(),
-      myCoins:
-          (snapshot[_myCoinsS] as List<dynamic>).cast<Map<String, double>>(),
+      uid: snapshot[uidS],
+      username: snapshot[usrenameS],
+      email: snapshot[emailS],
+      favouriteCoins: snapshot[favouriteCoinsS],
+      myCoins: snapshot[myCoinsS],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        _uidS: uid,
-        _usrenameS: username,
-        _emailS: email,
-        _favouriteCoinsS: favouriteCoins,
-        _myCoinsS: myCoins,
+        uidS: uid,
+        usrenameS: username,
+        emailS: email,
+        favouriteCoinsS: favouriteCoins,
+        myCoinsS: myCoins,
       };
 }

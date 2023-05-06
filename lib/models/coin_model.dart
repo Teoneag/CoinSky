@@ -60,6 +60,7 @@ class Coin {
 }
 
 Coin usd = Coin(
+    name: 'USD',
     symbol: 'USD',
     imageUrl:
         'https://www.pngall.com/wp-content/uploads/12/USD-PNG-Images.png');
