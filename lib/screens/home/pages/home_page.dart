@@ -19,10 +19,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getUser();
+    _getUser();
   }
 
-  void getUser() async {
+  void _getUser() async {
     _user = await AuthMethdods.getCurrentUser();
     if (mounted) {
       setState(() {
@@ -46,10 +46,7 @@ class _HomePageState extends State<HomePage> {
                   Text('Welcome back',
                       style: Theme.of(context).textTheme.titleLarge),
                   _isLoading
-                      ? const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(),
-                        )
+                      ? loadingPadding()
                       : TextButton(
                           onPressed: () {
                             Navigator.of(context).pushNamed(Routes.profile);

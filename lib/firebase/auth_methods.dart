@@ -43,14 +43,17 @@ class AuthMethdods {
           uid: cred.user!.uid,
           username: username,
           favouriteCoins: ['BTC', 'ETH'],
-          myCoins: [
-            {'USD': 1000.0},
-          ],
         );
         await _firestore
-            .collection('users')
+            .collection(S.users)
             .doc(cred.user!.uid)
             .set(user.toJson());
+        await _firestore
+            .collection(S.users)
+            .doc(cred.user!.uid)
+            .collection(S.coins)
+            .doc('USD')
+            .set({S.value: 1000.0});
         res = success;
       } else {
         res = "Please enter all the fields";

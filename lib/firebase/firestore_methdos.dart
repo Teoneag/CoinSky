@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '/utils/utils.dart';
-import '/models/user_model.dart' as model;
 import '/models/transaction_model.dart';
 import '/firebase/auth_methods.dart';
 
@@ -10,28 +9,24 @@ class FirestoreMethods {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static final _uid = _auth.currentUser!.uid;
 
-  static Future<String> addToFavorites(String coinSymbol) async {
-    String res = "Some error occured";
+  static Future<void> addToFavorites(String coinSymbol) async {
     try {
       await _firestore.collection(S.users).doc(_uid).update({
         'favouriteCoins': FieldValue.arrayUnion([coinSymbol])
       });
     } catch (e) {
-      res = e.toString();
+      print(e);
     }
-    return res;
   }
 
-  static Future<String> removeFromFavorites(String coinSymbol) async {
-    String res = "Some error occured";
+  static Future<void> removeFromFavorites(String coinSymbol) async {
     try {
       await _firestore.collection(S.users).doc(_uid).update({
         'favouriteCoins': FieldValue.arrayRemove([coinSymbol])
       });
     } catch (e) {
-      res = e.toString();
+      print(e);
     }
-    return res;
   }
 
   static Future<bool> isCoinFavorite(String coinSymbol) async {
@@ -39,13 +34,12 @@ class FirestoreMethods {
     return currentUser.favouriteCoins.contains(coinSymbol);
   }
 
-  static Future<String> makeTransaction({
+  static Future<void> makeTransaction({
     required String coinB,
     required String coinS,
     required double valueCoinB,
     required double valueCoinS,
   }) async {
-    String res = "Some error occured";
     try {
       final Trans trans = Trans(
         coinB: coinB,
@@ -62,44 +56,39 @@ class FirestoreMethods {
           .set(trans.toJson());
       await increaseCoinValue(coinSymbol: coinB, coinValue: valueCoinB);
       await increaseCoinValue(coinSymbol: coinS, coinValue: -valueCoinS);
-      res = success;
     } catch (e) {
-      res = e.toString();
+      print(e);
     }
-    return res;
   }
 
   static Future<void> increaseCoinValue(
       {required String coinSymbol, required double coinValue}) async {
     try {
-      final myCoins = (await AuthMethdods.getCurrentUser()).myCoins;
-      final coinIndex =
-          myCoins.indexWhere((coin) => coin.containsKey(coinSymbol));
-      if (coinIndex != -1) {
-        myCoins[coinIndex][coinSymbol] =
-            (myCoins[coinIndex][coinSymbol] ?? 0) + coinValue;
-      } else {
-        myCoins.add({coinSymbol: coinValue});
-      }
-      await _firestore
+      final docRef = _firestore
           .collection(S.users)
           .doc(_uid)
-          .update({model.myCoinsS: myCoins});
+          .collection(S.coins)
+          .doc(coinSymbol);
+      final snap = await docRef.get();
+      final value = (snap.exists ? snap.get(S.value) : 0.0) + coinValue;
+      await docRef.set({S.value: value});
     } catch (e) {
       print(e);
     }
   }
 
-  static Future<double?> getCoinAmount(String symbol) async {
-    try {
-      final snap = await _firestore.collection('users').doc(_uid).get();
-      final coins = snap.data()!['myCoins'];
-      return coins
-          .map((coin) => coin[symbol])
-          .firstWhere((value) => value != null, orElse: () => 0.0);
-    } catch (e) {
-      print(e);
-      return 0;
-    }
+  static Stream<List<double>> getCoinAmountStream(String coin1, String coin2) {
+    return _firestore
+        .collection(S.users)
+        .doc(_uid)
+        .collection(S.coins)
+        .snapshots()
+        .map((snapshot) {
+      final data = Map<String, double>.fromEntries(snapshot.docs.map((doc) {
+        final value = doc.data()[S.value] as num? ?? 0.0;
+        return MapEntry(doc.id, value.toDouble());
+      }));
+      return [data[coin1] ?? 0.0, data[coin2] ?? 0.0];
+    });
   }
 }

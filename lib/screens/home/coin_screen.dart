@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import '/widgets/favorite_button.dart';
+import '/utils/utils.dart';
 import '/models/coin_model.dart';
 import '/firebase/firestore_methdos.dart';
 
@@ -14,15 +14,11 @@ class CoinScreen extends StatefulWidget {
 class _CoinScreenState extends State<CoinScreen> {
   late final TextEditingController _coin1C;
   late final TextEditingController _coin2C;
-  double _coin1 = 0.0;
-  double _coin2 = 0.0;
-  bool _isLoading = true;
 
   @override
   void initState() {
     _coin2C = TextEditingController(text: '0.0');
     _coin1C = TextEditingController(text: '0.0');
-    _fetchCoinValues();
     super.initState();
   }
 
@@ -33,51 +29,57 @@ class _CoinScreenState extends State<CoinScreen> {
     super.dispose();
   }
 
-  Future<void> _fetchCoinValues() async {
-    _coin1 = await FirestoreMethods.getCoinAmount(widget.coin.symbol) ?? 0.0;
-    _coin2 = await FirestoreMethods.getCoinAmount('USD') ?? 0.0;
-    setState(() {
-      _isLoading = false;
-    });
+  Future makeTransaction(
+      String symbol1, String symbol2, String v1, String v2) async {
+    final d1 = double.tryParse(v1) ?? 0.0;
+    final d2 = double.tryParse(v2) ?? 0.0;
+    if (d1.abs() < 0.00001 || d2.abs() < 0.00001) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Value cannot be zero!')),
+      );
+    } else {
+      await FirestoreMethods.makeTransaction(
+        coinB: symbol1,
+        coinS: symbol2,
+        valueCoinB: double.tryParse(v1) ?? 0.0,
+        valueCoinS: double.tryParse(v2) ?? 0.0,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final coin = widget.coin;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.coin.symbol),
-      ),
+      appBar: AppBar(title: Text(coin.symbol)),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                const Text('You have: '),
-                _isLoading
-                    ? const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircularProgressIndicator(),
-                      )
-                    : Text('$_coin1 ${widget.coin.symbol} and $_coin2 USD'),
-              ],
-            ),
+          StreamBuilder<List<double>>(
+            stream: FirestoreMethods.getCoinAmountStream(coin.symbol, 'USD'),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return const CircularProgressIndicator();
+              final coinValues = snapshot.data!;
+              final coin1 = coinValues[0];
+              final coin2 = coinValues[1];
+              return Text(
+                  'You have: ${formatP(coin1)} ${coin.symbol} and ${formatP(coin2)} USD');
+            },
           ),
           Row(
             children: [
               ElevatedButton(
-                onPressed: () async {
-                  await FirestoreMethods.makeTransaction(
-                    coinB: widget.coin.symbol,
-                    coinS: 'USD',
-                    valueCoinB: double.tryParse(_coin1C.text) ?? 0.0,
-                    valueCoinS: double.tryParse(_coin2C.text) ?? 0.0,
+                onPressed: () {
+                  makeTransaction(
+                    coin.symbol,
+                    'USD',
+                    _coin1C.text,
+                    _coin2C.text,
                   );
                 },
                 child: Column(
                   children: [
-                    Text('BUY ${widget.coin.symbol}'),
+                    Text('BUY ${coin.symbol}'),
                     const Text('SELL USD'),
                   ],
                 ),
@@ -89,13 +91,10 @@ class _CoinScreenState extends State<CoinScreen> {
                     controller: _coin1C,
                     keyboardType: TextInputType.number,
                     onChanged: (x) {
-                      _coin2C.text =
-                          ((double.tryParse(x) ?? 0.0) * widget.coin.price)
-                              .toStringAsFixed(2);
+                      _coin2C.text = ((double.tryParse(x) ?? 0.0) * coin.price)
+                          .toStringAsFixed(2);
                     },
-                    decoration: InputDecoration(
-                      suffixText: widget.coin.symbol,
-                    ),
+                    decoration: InputDecoration(suffixText: coin.symbol),
                   ),
                 ),
               ),
@@ -107,9 +106,8 @@ class _CoinScreenState extends State<CoinScreen> {
                     controller: _coin2C,
                     keyboardType: TextInputType.number,
                     onChanged: (x) {
-                      _coin1C.text =
-                          ((double.tryParse(x) ?? 0.0) / widget.coin.price)
-                              .toStringAsFixed(4);
+                      _coin1C.text = ((double.tryParse(x) ?? 0.0) / coin.price)
+                          .toStringAsFixed(4);
                     },
                     decoration: const InputDecoration(
                       suffixText: '\$',
@@ -118,17 +116,17 @@ class _CoinScreenState extends State<CoinScreen> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () async {
-                  await FirestoreMethods.makeTransaction(
-                    coinB: 'USD',
-                    coinS: widget.coin.symbol,
-                    valueCoinS: double.tryParse(_coin1C.text) ?? 0.0,
-                    valueCoinB: double.tryParse(_coin2C.text) ?? 0.0,
+                onPressed: () {
+                  makeTransaction(
+                    'USD',
+                    coin.symbol,
+                    _coin2C.text,
+                    _coin1C.text,
                   );
                 },
                 child: Column(
                   children: [
-                    Text('SELL ${widget.coin.symbol}'),
+                    Text('SELL ${coin.symbol}'),
                     const Text('BUY USD'),
                   ],
                 ),

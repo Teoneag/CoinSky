@@ -83,11 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
               // login button
               TextButton(
                 onPressed: loginUser,
-                child: _isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : const Text('Log in'),
+                child: _isLoading ? loadingCenter() : const Text('Log in'),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

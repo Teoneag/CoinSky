@@ -85,11 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextButton(
                 onPressed: registerUser,
-                child: _isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : const Text('Register'),
+                child: _isLoading ? loadingCenter() : const Text('Register'),
               ),
 
               Row(

@@ -4,20 +4,17 @@ const uidS = 'uid';
 const usrenameS = 'username';
 const emailS = 'email';
 const favouriteCoinsS = 'favouriteCoins';
-const myCoinsS = 'myCoins';
 
 class User {
   final String uid;
   final String username;
   final String email;
   final List favouriteCoins; // symbols of the coins
-  final List myCoins;
   const User({
     required this.uid,
     required this.username,
     required this.email,
     required this.favouriteCoins,
-    required this.myCoins,
   });
 
   static User fromSnap(DocumentSnapshot snap) {
@@ -27,7 +24,6 @@ class User {
       username: snapshot[usrenameS],
       email: snapshot[emailS],
       favouriteCoins: snapshot[favouriteCoinsS],
-      myCoins: snapshot[myCoinsS],
     );
   }
 
@@ -36,6 +32,5 @@ class User {
         usrenameS: username,
         emailS: email,
         favouriteCoinsS: favouriteCoins,
-        myCoinsS: myCoins,
       };
 }

@@ -9,15 +9,10 @@
 
 ## TO DO
 ### on firestoreMethods
-- show the chart for the right coin
-- reset virtual portofolio
-- buy + sell
-- wallet page
-- add to the home page: ballance, positions
-
-make the coin page look ok
-
-Go on every page and add minimum text + functionality
+- CoinScreen: show chart
+- PortofolioPage: show holdings, update ballance in real time, reset virtual portofolio
+- HomePage: ballance, holdings
+- Go on every page and add minimum text + functionality
 
 ### Theme
 - add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye
@@ -30,13 +25,15 @@ Go on every page and add minimum text + functionality
 - make a responsive layout
 - make different languages available
 - hide the notificationbar
-- Handle exceptions
+- Handle exceptions and errors
 ### User
 - add different log in methodes
 - add username check + mail check + password check?
 - user img (display it instead of the user button on the appbar)
 - after register, autocomplete mail in login
 - At the login and register screens, add some welcome text + option to skip loggin
+- autocomplete @gmail.com
+- solve the bug after login (user is null or smth)
 ### List view
 - Is 24hmarketcap the same as 24h volume?
 - update coins every 1 second or when u refresh (refersh indicator) + refresh button from app bar
@@ -49,7 +46,10 @@ Go on every page and add minimum text + functionality
 - add the coin vs coin on exchange: https://min-api.cryptocompare.com/data/v2/pair/mapping/exchange/fsym?exchangeFsym=BTC&limit=1000&exchange=binance
 - change error coin img/handle it differently
 - add an i button after the 'end of list', show: To add a coin to favorites: Tap on a coin on the trades page, and then star it.
+### Coin view
+- solve very small nr pb
 ### Positions
+- execute an order only if there are no errors (not allow negative balance)
 - add create, delete, modify virtual portofolio
 - add real money positions
 ### Settings page
@@ -57,6 +57,7 @@ Go on every page and add minimum text + functionality
 - user: log out, delete account
 ### Home page
 - Add welcome/welcome back
+
 # Maybe usefull
 - visualDensity: VisualDensity.adaptivePlatformDensity, (in ThemeData)
 - elevation (AppBar)

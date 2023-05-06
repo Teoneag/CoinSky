@@ -1,7 +1,6 @@
 import 'package:coin_sky_0/screens/home/coin_screen.dart';
 import 'package:flutter/material.dart';
 import '/utils/utils.dart';
-import '/utils/routes.dart';
 import '/models/coin_model.dart';
 import '/crypto_compare_api/crypto_compare_api_service.dart';
 
@@ -81,8 +80,6 @@ class _CoinsListState extends State<CoinsList> {
                 final coin = _coins[index];
                 return InkWell(
                   onTap: () {
-                    // Navigator.of(context)
-                    //     .pushNamed(Routes.coin, arguments: {'coin': coin});
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -169,11 +166,7 @@ class _CoinsListState extends State<CoinsList> {
                   );
                 } else {
                   _fetch();
-                  return const Center(
-                      child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
-                  ));
+                  return loadingCenterPadding();
                 }
               }
             },
