@@ -2,7 +2,7 @@ import 'package:coin_sky_0/screens/home/coin_screen.dart';
 import 'package:flutter/material.dart';
 import '/utils/utils.dart';
 import '/models/coin_model.dart';
-import '/crypto_compare_api/crypto_compare_api_service.dart';
+import '../cryptocompare_api/cryptocompare_api_service.dart';
 
 class CoinsList extends StatefulWidget {
   final CoinsListType type;

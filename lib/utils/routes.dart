@@ -8,7 +8,6 @@ import '/screens/notification_screen.dart';
 import '/screens/profile_screen.dart';
 import '/screens/settings_screen.dart';
 import '/screens/about_us_screen.dart';
-import '/screens/home/coin_screen.dart';
 
 class Routes {
   static const String loading = '/loading';

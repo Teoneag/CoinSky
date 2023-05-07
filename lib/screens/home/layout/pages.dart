@@ -9,6 +9,6 @@ final List<Widget> pages = [
   const HomePage(),
   const PortfolioPage(),
   const TradePage(),
-  const EarnPage(),
+  EarnPage(),
   const LearnPage(),
 ];

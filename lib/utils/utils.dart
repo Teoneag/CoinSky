@@ -28,7 +28,6 @@ showSnackBar(String content, BuildContext context) {
 
 class S {
   static const users = 'users';
-  // static const positions = 'positions';
   static const trans = 'trans';
   static const value = 'value';
   static const coins = 'coins';

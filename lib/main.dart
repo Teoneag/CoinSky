@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CoinSky0',
+      title: 'CoinSky',
       theme: lightTheme1,
       darkTheme: darkTheme1,
       themeMode: context.watch<ThemeController>().getThemeMode(),

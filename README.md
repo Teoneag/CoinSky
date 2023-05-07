@@ -9,10 +9,10 @@
 
 ## TO DO
 ### on firestoreMethods
-- CoinScreen: show chart
 - PortofolioPage: show holdings, update ballance in real time, reset virtual portofolio
 - HomePage: ballance, holdings
 - Go on every page and add minimum text + functionality
+- logo + app name
 
 ### Theme
 - add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye
@@ -52,6 +52,7 @@
 - execute an order only if there are no errors (not allow negative balance)
 - add create, delete, modify virtual portofolio
 - add real money positions
+- pup-up before buying?
 ### Settings page
 - theme
 - user: log out, delete account

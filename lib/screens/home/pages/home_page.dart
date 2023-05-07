@@ -87,7 +87,15 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Text(
-                'Your open positions',
+                'Your holdings',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Text(
+                'Your history',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
