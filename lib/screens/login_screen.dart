@@ -57,6 +57,8 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 20,
               ),
+              Text('Please log in!',
+                  style: Theme.of(context).textTheme.titleLarge),
               // text field input for email
               TextField(
                 controller: _emailC,

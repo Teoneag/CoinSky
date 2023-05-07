@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.coin_sky_0">
+    package="com.example.CoinSky">
    <application
-        android:label="coin_sky_0"
+        android:label="CoinSky"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

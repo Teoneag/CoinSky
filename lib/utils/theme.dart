@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '/utils/utils.dart';
 
 final lightTheme1 = ThemeData.light().copyWith(
   colorScheme: const ColorScheme.light().copyWith(
@@ -33,7 +34,7 @@ final darkTheme1 = ThemeData.dark().copyWith(
 enum ThemeModeType { light, dark, system }
 
 class ThemeController extends ChangeNotifier {
-  static const String _themeModeKey = 'THEME_MODE';
+  static const String _themeModeKey = S.themeMode;
 
   ThemeModeType _themeMode = ThemeModeType.system;
 

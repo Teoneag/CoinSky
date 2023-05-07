@@ -1,5 +1,5 @@
 # CoinSky
-
+By Teodor Neagoe
 ## Goals for this app
 1. A wallet, where u can do everything related to crypto: view, buy, sell, use leverage, learn
 2. As intuitive as possible
@@ -8,11 +8,9 @@
 5. U can coppy trade like on etoro
 
 ## TO DO
-### on firestoreMethods
-- Settings: Reset virtual portofolio
-- HomePage: ballance, holdings
-- Go on every page and add minimum text + functionality
-- logo + app name
+### Urgent
+- Solve the money bug: check if u have the money to make a transfer
+- Splash screen
 
 ### Theme
 - add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye

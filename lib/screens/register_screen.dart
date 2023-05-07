@@ -63,6 +63,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 20,
               ),
+              Text('Please register!',
+                  style: Theme.of(context).textTheme.titleLarge),
               TextField(
                 controller: _nameC,
                 decoration:

@@ -1,6 +1,6 @@
 {
-    "name": "coin_sky_0",
-    "short_name": "coin_sky_0",
+    "name": "CoinSky",
+    "short_name": "CoinSky",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

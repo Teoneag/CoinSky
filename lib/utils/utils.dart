@@ -31,6 +31,7 @@ class S {
   static const trans = 'trans';
   static const value = 'value';
   static const coins = 'coins';
+  static const themeMode = 'THEME_MODE';
 }
 
 enum CoinsListType { all, liked, owned }

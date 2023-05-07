@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '/utils/routes.dart';
 import '/utils/theme.dart';
-import '/firebase/auth_methods.dart';
+import '/widgets/log_out_dialog.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});
@@ -46,27 +46,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Log out'),
-                      content: const Text('Are you sure u want to log out?'),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('Cancel')),
-                        TextButton(
-                            onPressed: () async {
-                              await AuthMethdods.signOut();
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  Routes.login, (route) => false);
-                            },
-                            child: const Text('Log out')),
-                      ],
-                    );
+                    return const LogOutDialog();
                   },
                 );
-
                 break;
               default:
                 Navigator.of(context).pushNamed(value);

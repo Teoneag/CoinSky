@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:coin_sky_0/cryptocompare_api/cryptocompare_api_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '/cryptocompare_api/cryptocompare_api_service.dart';
 import '/utils/utils.dart';
-import '/models/transaction_model.dart';
 import '/firebase/auth_methods.dart';
 
 class FirestoreMethods {
@@ -42,19 +41,19 @@ class FirestoreMethods {
     required double valueCoinS,
   }) async {
     try {
-      final Trans trans = Trans(
-        coinB: coinB,
-        coinS: coinS,
-        valueCoinB: valueCoinB,
-        valueCoinS: valueCoinS,
-        date: DateTime.now(),
-      );
-      await _firestore
-          .collection(S.users)
-          .doc(_uid)
-          .collection(S.trans)
-          .doc()
-          .set(trans.toJson());
+      // final Trans trans = Trans(
+      //   coinB: coinB,
+      //   coinS: coinS,
+      //   valueCoinB: valueCoinB,
+      //   valueCoinS: valueCoinS,
+      //   date: DateTime.now(),
+      // );
+      // await _firestore
+      //     .collection(S.users)
+      //     .doc(_uid)
+      //     .collection(S.trans)
+      //     .doc()
+      //     .set(trans.toJson());
       await increaseCoinValue(coinSymbol: coinB, coinValue: valueCoinB);
       await increaseCoinValue(coinSymbol: coinS, coinValue: -valueCoinS);
     } catch (e) {
@@ -112,19 +111,45 @@ class FirestoreMethods {
     });
   }
 
-  static Future<double> calculateBallance() async {
-    final snap = await _firestore
+  static Stream<double> calculateBalanceStream() async* {
+    final snapshots = _firestore
         .collection(S.users)
         .doc(_uid)
         .collection(S.coins)
-        .get();
-    final docs = snap.docs;
-    double sum = 0.0;
-    for (var doc in docs) {
-      final price = await APIService.getCoinprice(doc.id);
-      final amont = doc[S.value];
-      sum += price * amont;
+        .snapshots();
+
+    await for (final snap in snapshots) {
+      final docs = snap.docs;
+      double sum = 0.0;
+      for (var doc in docs) {
+        final price = await APIService.getCoinprice(doc.id);
+        final amount = doc[S.value];
+        sum += price * amount;
+      }
+      yield sum;
     }
-    return sum;
+  }
+
+  static Future resetWallet() async {
+    try {
+      await _firestore
+          .collection(S.users)
+          .doc(_uid)
+          .collection(S.coins)
+          .get()
+          .then((snapshot) {
+        for (DocumentSnapshot doc in snapshot.docs) {
+          doc.reference.delete();
+        }
+      });
+      await _firestore
+          .collection(S.users)
+          .doc(_uid)
+          .collection(S.coins)
+          .doc('USD')
+          .set({S.value: 1000.0});
+    } catch (e) {
+      print(e);
+    }
   }
 }

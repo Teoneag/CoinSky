@@ -1,4 +1,4 @@
-package com.example.coin_sky_0
+package com.example.CoinSky
 
 import io.flutter.embedding.android.FlutterActivity
 

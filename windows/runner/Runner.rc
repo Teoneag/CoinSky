@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "coin_sky_0" "\0"
+            VALUE "FileDescription", "CoinSky" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "coin_sky_0" "\0"
+            VALUE "InternalName", "CoinSky" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "coin_sky_0.exe" "\0"
-            VALUE "ProductName", "coin_sky_0" "\0"
+            VALUE "OriginalFilename", "CoinSky.exe" "\0"
+            VALUE "ProductName", "CoinSky" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

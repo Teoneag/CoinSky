@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:coin_sky_0/firebase/firestore_methdos.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:http/http.dart' as http;
 import '/utils/utils.dart';
 import '/models/coin_model.dart';
 import '/firebase/auth_methods.dart';
+import '/firebase/firestore_methdos.dart';
 
 class APIService {
   static Future<double> getCoinprice(String symbol) async {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '/firebase/firestore_methdos.dart';
 import '/utils/routes.dart';
 import '/utils/utils.dart';
-import '/models/user_model.dart' as model;
 import '/widgets/coins_list.dart';
 import '/firebase/auth_methods.dart';
 
@@ -14,26 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late double ballance;
-  late final model.User _user;
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetch();
-  }
-
-  void _fetch() async {
-    _user = await AuthMethdods.getCurrentUser();
-    ballance = await FirestoreMethods.calculateBallance();
-    if (mounted) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,15 +27,19 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text('Welcome back',
                       style: Theme.of(context).textTheme.titleLarge),
-                  _isLoading
-                      ? loadingPadding()
-                      : TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(Routes.profile);
-                          },
-                          child: Text('@${_user.username}',
-                              style: const TextStyle(fontSize: 20)),
-                        ),
+                  FutureBuilder(
+                    future: AuthMethdods.getCurrentUser(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) return loadingCenterPadding();
+                      return TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(Routes.profile);
+                        },
+                        child: Text('@${snapshot.data!.username}',
+                            style: const TextStyle(fontSize: 20)),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
@@ -67,15 +50,19 @@ class _HomePageState extends State<HomePage> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            _isLoading
-                ? loadingPadding()
-                : Padding(
-                    padding: const EdgeInsets.only(left: 30),
-                    child: Text(
-                      '≈ \$$ballance',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+            StreamBuilder<double>(
+              stream: FirestoreMethods.calculateBalanceStream(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return loadingCenterPadding();
+                return Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Text(
+                    '≈ \$${snapshot.data}',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
+                );
+              },
+            ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.only(left: 20, bottom: 10),
@@ -90,7 +77,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const Divider(),
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 20, bottom: 10),
               child: Text(
                 'Your holdings',
                 style: Theme.of(context).textTheme.titleMedium,

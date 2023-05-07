@@ -10,7 +10,10 @@ class NotificationScreen extends StatelessWidget {
         title: const Text('Notifications'),
       ),
       body: const Center(
-        child: Text('Notification scren'),
+        child: Text(
+          'No notifications for now ...',
+          style: TextStyle(fontSize: 20),
+        ),
       ),
     );
   }

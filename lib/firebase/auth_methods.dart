@@ -42,7 +42,16 @@ class AuthMethdods {
           email: email,
           uid: cred.user!.uid,
           username: username,
-          favouriteCoins: ['BTC', 'ETH'],
+          favouriteCoins: [
+            'BTC',
+            'ETH',
+            'USDT',
+            'BNB',
+            'XRP',
+            'ADA',
+            'SOL',
+            'DOGE'
+          ],
         );
         await _firestore
             .collection(S.users)
