@@ -9,7 +9,7 @@
 
 ## TO DO
 ### on firestoreMethods
-- PortofolioPage: show holdings, update ballance in real time, reset virtual portofolio
+- Settings: Reset virtual portofolio
 - HomePage: ballance, holdings
 - Go on every page and add minimum text + functionality
 - logo + app name

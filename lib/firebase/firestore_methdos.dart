@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coin_sky_0/cryptocompare_api/cryptocompare_api_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '/utils/utils.dart';
 import '/models/transaction_model.dart';
@@ -77,6 +78,25 @@ class FirestoreMethods {
     }
   }
 
+  static Future<Map<String, dynamic>> getOwnedCoins() async {
+    try {
+      final coinsSnapshot = await _firestore
+          .collection(S.users)
+          .doc(_uid)
+          .collection(S.coins)
+          .get();
+      final coinsMap = coinsSnapshot.docs.fold<Map<String, double>>(
+          {},
+          (prev, coin) => {
+                coin.id: coin.data()['value'] as double,
+                ...prev,
+              });
+      return coinsMap;
+    } catch (e) {
+      throw Exception('$e');
+    }
+  }
+
   static Stream<List<double>> getCoinAmountStream(String coin1, String coin2) {
     return _firestore
         .collection(S.users)
@@ -90,5 +110,21 @@ class FirestoreMethods {
       }));
       return [data[coin1] ?? 0.0, data[coin2] ?? 0.0];
     });
+  }
+
+  static Future<double> calculateBallance() async {
+    final snap = await _firestore
+        .collection(S.users)
+        .doc(_uid)
+        .collection(S.coins)
+        .get();
+    final docs = snap.docs;
+    double sum = 0.0;
+    for (var doc in docs) {
+      final price = await APIService.getCoinprice(doc.id);
+      final amont = doc[S.value];
+      sum += price * amont;
+    }
+    return sum;
   }
 }

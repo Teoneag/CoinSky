@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/firebase/firestore_methdos.dart';
 import '/utils/routes.dart';
 import '/utils/utils.dart';
 import '/models/user_model.dart' as model;
@@ -13,17 +14,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late double ballance;
   late final model.User _user;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _getUser();
+    _fetch();
   }
 
-  void _getUser() async {
+  void _fetch() async {
     _user = await AuthMethdods.getCurrentUser();
+    ballance = await FirestoreMethods.calculateBallance();
     if (mounted) {
       setState(() {
         _isLoading = false;
@@ -64,13 +67,15 @@ class _HomePageState extends State<HomePage> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30),
-              child: Text(
-                '≈ \$2,470.53',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ),
+            _isLoading
+                ? loadingPadding()
+                : Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Text(
+                      '≈ \$$ballance',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.only(left: 20, bottom: 10),
@@ -91,14 +96,11 @@ class _HomePageState extends State<HomePage> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                'Your history',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+            const SizedBox(
+              height: 500,
+              child: CoinsList(type: CoinsListType.owned),
             ),
+            const Divider(),
           ],
         ),
       ),

@@ -56,11 +56,11 @@ class _CoinsListState extends State<CoinsList> {
                   width: 170,
                   child: Row(
                     children: [
-                      Text('Rank',
-                          style: Theme.of(context).textTheme.bodyMedium),
-                      const SizedBox(width: 40),
-                      Text('Symbol',
-                          style: Theme.of(context).textTheme.bodyMedium),
+                      widget.type == CoinsListType.owned
+                          ? Text('Your amount of this coin',
+                              style: Theme.of(context).textTheme.bodyMedium)
+                          : Text('Coin',
+                              style: Theme.of(context).textTheme.bodyMedium),
                     ],
                   )),
               Text('MktCap/24hV',
@@ -96,7 +96,12 @@ class _CoinsListState extends State<CoinsList> {
                           width: 170,
                           child: Row(
                             children: [
-                              Text('${index + 1}.'),
+                              SizedBox(
+                                width: 40,
+                                child: coin.amount == null
+                                    ? Text('${index + 1}.')
+                                    : Text(formatC(coin.amount!)),
+                              ),
                               const SizedBox(width: 10),
                               CircleAvatar(
                                   backgroundImage: NetworkImage(coin.imageUrl)),

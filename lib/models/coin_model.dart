@@ -6,6 +6,7 @@ class Coin {
   double marketCap24h;
   double price;
   double priceChange24h;
+  double? amount;
 
   Coin({
     this.name,
@@ -16,6 +17,7 @@ class Coin {
     this.marketCap24h = 0,
     this.price = 0,
     this.priceChange24h = 0,
+    this.amount,
   });
 
   factory Coin.fromJson1(Map<String, dynamic> json) {
@@ -42,7 +44,8 @@ class Coin {
       throw Exception('We got this error trying to parse the data: $e');
     }
   }
-  factory Coin.fromJson2(Map<String, dynamic> json) {
+
+  factory Coin.fromJson2(Map<String, dynamic> json, {double? amount}) {
     try {
       final rawUSD = json['USD'];
       return Coin(
@@ -52,6 +55,7 @@ class Coin {
         marketCap24h: rawUSD['TOTALVOLUME24H'].toDouble(),
         price: rawUSD['PRICE'].toDouble(),
         priceChange24h: rawUSD['CHANGEPCT24HOUR'].toDouble(),
+        amount: amount,
       );
     } catch (e) {
       throw Exception('We got this error trying to parse the data: $e');

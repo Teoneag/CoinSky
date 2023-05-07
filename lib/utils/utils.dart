@@ -33,7 +33,7 @@ class S {
   static const coins = 'coins';
 }
 
-enum CoinsListType { all, liked }
+enum CoinsListType { all, liked, owned }
 
 Widget loadingPadding() {
   return const Padding(

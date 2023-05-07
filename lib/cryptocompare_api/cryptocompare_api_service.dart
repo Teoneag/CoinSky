@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:coin_sky_0/firebase/firestore_methdos.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:http/http.dart' as http;
 import '/utils/utils.dart';
@@ -6,6 +7,15 @@ import '/models/coin_model.dart';
 import '/firebase/auth_methods.dart';
 
 class APIService {
+  static Future<double> getCoinprice(String symbol) async {
+    final url =
+        'https://min-api.cryptocompare.com/data/price?fsym=$symbol&tsyms=USD';
+    final response = await http.get(Uri.parse(url));
+    final data = json.decode(response.body);
+    final x = await data['USD'];
+    return x.toDouble();
+  }
+
   static Future<List<Coin>?> getCoins(
       int page, int limit, CoinsListType type) async {
     try {
@@ -23,6 +33,22 @@ class APIService {
             return null;
           }
           final coins = coinsData.map((json) => Coin.fromJson2(json)).toList();
+          return coins;
+        case CoinsListType.owned:
+          final ownedCoins = await FirestoreMethods.getOwnedCoins();
+          String url =
+              'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${ownedCoins.keys.join(',')}&tsyms=USD';
+          final response = await http
+              .get(Uri.parse(url), headers: {'Accept': 'application/json'});
+          final data = json.decode(response.body);
+          final List<dynamic> coinsData = data['RAW'].values.toList();
+          if (coinsData.length < page * limit) {
+            return null;
+          }
+          final coins = coinsData
+              .map((json) => Coin.fromJson2(json,
+                  amount: ownedCoins[json['USD']['FROMSYMBOL']]))
+              .toList();
           return coins;
         default:
           String url =
