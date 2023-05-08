@@ -42,7 +42,7 @@ class AuthMethdods {
           email: email,
           uid: cred.user!.uid,
           username: username,
-          favouriteCoins: [
+          favCoinsSym: [
             'BTC',
             'ETH',
             'USDT',
@@ -74,22 +74,28 @@ class AuthMethdods {
   }
 
   static Future<void> signOut() async {
-    await _auth.signOut();
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   static Future<model.User> getCurrentUser() async {
-    final snapshot = await _firestore.collection(S.users).doc(_uid).get();
-    return model.User.fromSnap(snapshot);
+    try {
+      final snapshot = await _firestore.collection(S.users).doc(_uid).get();
+      return model.User.fromSnap(snapshot);
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   static Future<String> getUsername() async {
-    String res = "Some error occured";
     try {
       var snap = await _firestore.collection(S.users).doc(_uid).get();
-      res = model.User.fromSnap(snap).username;
+      return model.User.fromSnap(snap).username;
     } catch (e) {
       return '$e';
     }
-    return res;
   }
 }

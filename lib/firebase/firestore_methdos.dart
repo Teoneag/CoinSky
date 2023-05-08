@@ -31,7 +31,7 @@ class FirestoreMethods {
 
   static Future<bool> isCoinFavorite(String coinSymbol) async {
     final currentUser = await AuthMethdods.getCurrentUser();
-    return currentUser.favouriteCoins.contains(coinSymbol);
+    return currentUser.favCoinsSym.contains(coinSymbol);
   }
 
   static Future<void> makeTransaction({
@@ -120,7 +120,6 @@ class FirestoreMethods {
         .doc(_uid)
         .collection(S.coins)
         .snapshots();
-
     await for (final snap in snapshots) {
       final docs = snap.docs;
       double sum = 0.0;

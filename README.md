@@ -11,6 +11,7 @@ By Teodor Neagoe
 ### Urgent
 - refresh, and refresh after resetting wallet
 - check why the ballance isn't updateing
+- handdle errors
 
 ### Theme
 - add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye
@@ -23,7 +24,9 @@ By Teodor Neagoe
 - make a responsive layout
 - make different languages available
 - hide the notificationbar
-- Handle exceptions and errors
+- handle exceptions and errors
+- solve warnings
+- after update, it's very buggy (maybe refresh or smth?)
 ### User
 - add different log in methodes
 - add username check + mail check + password check?
@@ -53,6 +56,7 @@ By Teodor Neagoe
 - add create, delete, modify virtual portofolio
 - add real money positions
 - pup-up before buying?
+- make more efficient when calculating the ballance: request all the data in only one http request
 ### Settings page
 - theme
 - user: log out, delete account

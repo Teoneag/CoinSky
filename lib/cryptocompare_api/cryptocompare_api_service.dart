@@ -6,10 +6,11 @@ import '/models/coin_model.dart';
 import '/firebase/auth_methods.dart';
 import '/firebase/firestore_methdos.dart';
 
+const url_api = 'https://min-api.cryptocompare.com';
+
 class APIService {
   static Future<double> getCoinprice(String symbol) async {
-    final url =
-        'https://min-api.cryptocompare.com/data/price?fsym=$symbol&tsyms=USD';
+    final url = '$url_api/data/price?fsym=$symbol&tsyms=USD';
     final response = await http.get(Uri.parse(url));
     final data = json.decode(response.body);
     final x = await data['USD'];
@@ -22,9 +23,9 @@ class APIService {
       switch (type) {
         case CoinsListType.liked:
           final currentUser = await AuthMethdods.getCurrentUser();
-          final favoriteCoins = currentUser.favouriteCoins;
+          final favoriteCoins = currentUser.favCoinsSym;
           String url =
-              'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${favoriteCoins.join(',')}&tsyms=USD';
+              '$url_api/data/pricemultifull?fsyms=${favoriteCoins.join(',')}&tsyms=USD';
           final response = await http
               .get(Uri.parse(url), headers: {'Accept': 'application/json'});
           final data = json.decode(response.body);
@@ -37,7 +38,7 @@ class APIService {
         case CoinsListType.owned:
           final ownedCoins = await FirestoreMethods.getOwnedCoins();
           String url =
-              'https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${ownedCoins.keys.join(',')}&tsyms=USD';
+              '$url_api/data/pricemultifull?fsyms=${ownedCoins.keys.join(',')}&tsyms=USD';
           final response = await http
               .get(Uri.parse(url), headers: {'Accept': 'application/json'});
           final data = json.decode(response.body);
@@ -52,7 +53,7 @@ class APIService {
           return coins;
         default:
           String url =
-              'https://min-api.cryptocompare.com/data/top/mktcapfull?tsym=USD&limit=$limit&page=$page';
+              '$url_api/data/top/mktcapfull?tsym=USD&limit=$limit&page=$page';
           final response = await http
               .get(Uri.parse(url), headers: {'Accept': 'application/json'});
           final data = json.decode(response.body);
@@ -68,7 +69,7 @@ class APIService {
 
   static Future<List<FlSpot>> getChartData(String coinSymbol) async {
     final response = await http.get(Uri.parse(
-        'https://min-api.cryptocompare.com/data/v2/histominute?fsym=$coinSymbol&tsym=USD&limit=720'));
+        '$url_api/data/v2/histominute?fsym=$coinSymbol&tsym=USD&limit=720'));
     final json = jsonDecode(response.body);
     final List data = json['Data']['Data'];
     final List<FlSpot> spots = [];

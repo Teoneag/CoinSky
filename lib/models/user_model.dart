@@ -9,12 +9,12 @@ class User {
   final String uid;
   final String username;
   final String email;
-  final List favouriteCoins; // symbols of the coins
+  final List favCoinsSym; // symbols of the coins
   const User({
     required this.uid,
     required this.username,
     required this.email,
-    required this.favouriteCoins,
+    required this.favCoinsSym,
   });
 
   static User fromSnap(DocumentSnapshot snap) {
@@ -23,7 +23,7 @@ class User {
       uid: snapshot[uidS],
       username: snapshot[usrenameS],
       email: snapshot[emailS],
-      favouriteCoins: snapshot[favouriteCoinsS],
+      favCoinsSym: snapshot[favouriteCoinsS],
     );
   }
 
@@ -31,6 +31,6 @@ class User {
         uidS: uid,
         usrenameS: username,
         emailS: email,
-        favouriteCoinsS: favouriteCoins,
+        favouriteCoinsS: favCoinsSym,
       };
 }

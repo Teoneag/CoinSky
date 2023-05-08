@@ -41,7 +41,7 @@ class Coin {
         priceChange24h: rawUSD['CHANGEPCT24HOUR'].toDouble(),
       );
     } catch (e) {
-      throw Exception('We got this error trying to parse the data: $e');
+      throw Exception(e);
     }
   }
 
@@ -58,13 +58,13 @@ class Coin {
         amount: amount,
       );
     } catch (e) {
-      throw Exception('We got this error trying to parse the data: $e');
+      throw Exception(e);
     }
   }
 }
 
-Coin usd = Coin(
-    name: 'USD',
-    symbol: 'USD',
-    imageUrl:
-        'https://www.pngall.com/wp-content/uploads/12/USD-PNG-Images.png');
+// Coin usd = Coin(
+//     name: 'USD',
+//     symbol: 'USD',
+//     imageUrl:
+//         'https://www.pngall.com/wp-content/uploads/12/USD-PNG-Images.png');

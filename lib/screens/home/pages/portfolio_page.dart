@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/utils/utils.dart';
 import '/widgets/coins_list.dart';
-import '/firebase/firestore_methdos.dart';
+import '/widgets/ballance.dart';
 
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
@@ -25,26 +25,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   style: Theme.of(context).textTheme.titleLarge),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, bottom: 10),
-            child: Text(
-              'Total Ballance (USD)',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ),
-          StreamBuilder<double>(
-            stream: FirestoreMethods.calculateBalanceStream(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return loadingCenterPadding();
-              return Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: Text(
-                  '≈ \$${formatN(snapshot.data ?? 0.0)}',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              );
-            },
-          ),
+          const Ballance(),
           const Divider(),
           Padding(
             padding: const EdgeInsets.only(left: 20, bottom: 10),

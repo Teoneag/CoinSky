@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(
-              height: 500,
+              height: 300,
               child: CoinsList(type: CoinsListType.owned),
             ),
             const Divider(),
