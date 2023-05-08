@@ -54,8 +54,8 @@ class FirestoreMethods {
       //     .collection(S.trans)
       //     .doc()
       //     .set(trans.toJson());
-      await increaseCoinValue(coinSymbol: coinB, coinValue: valueCoinB);
       await increaseCoinValue(coinSymbol: coinS, coinValue: -valueCoinS);
+      await increaseCoinValue(coinSymbol: coinB, coinValue: valueCoinB);
     } catch (e) {
       print(e);
     }
@@ -71,6 +71,9 @@ class FirestoreMethods {
           .doc(coinSymbol);
       final snap = await docRef.get();
       final value = (snap.exists ? snap.get(S.value) : 0.0) + coinValue;
+      if (value < 0) {
+        throw Exception('Boss n-ai bani');
+      }
       await docRef.set({S.value: value});
     } catch (e) {
       print(e);

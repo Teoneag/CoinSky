@@ -94,6 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onPressed: () async {
                               await FirestoreMethods.resetWallet();
                               Navigator.of(context).pop();
+                              Navigator.of(context).pop();
                             },
                             child: const Text('Reset wallet')),
                       ],

@@ -9,8 +9,8 @@ By Teodor Neagoe
 
 ## TO DO
 ### Urgent
-- Solve the money bug: check if u have the money to make a transfer
 - Splash screen
+- refresh, and refresh after resetting wallet
 
 ### Theme
 - add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye
@@ -44,8 +44,10 @@ By Teodor Neagoe
 - add the coin vs coin on exchange: https://min-api.cryptocompare.com/data/v2/pair/mapping/exchange/fsym?exchangeFsym=BTC&limit=1000&exchange=binance
 - change error coin img/handle it differently
 - add an i button after the 'end of list', show: To add a coin to favorites: Tap on a coin on the trades page, and then star it.
-### Coin view
-- solve very small nr pb
+### Coin screen
+- solve the threshhold problem
+- When u can't buy or sell smth, make the button gray
+- solve the delay with the snakebar
 ### Positions
 - execute an order only if there are no errors (not allow negative balance)
 - add create, delete, modify virtual portofolio

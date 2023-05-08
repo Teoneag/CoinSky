@@ -32,6 +32,7 @@ class S {
   static const value = 'value';
   static const coins = 'coins';
   static const themeMode = 'THEME_MODE';
+  static const threshold = 0.00001;
 }
 
 enum CoinsListType { all, liked, owned }
