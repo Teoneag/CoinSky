@@ -18,7 +18,6 @@ class _CoinScreenState extends State<CoinScreen> {
   late final TextEditingController _coin1C;
   late final TextEditingController _coin2C;
   List<FlSpot> _spots = [];
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -46,13 +45,6 @@ class _CoinScreenState extends State<CoinScreen> {
 
   Future makeTransaction(
       String symbol1, String symbol2, String v1, String v2, double x) async {
-    if (_isLoading) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Please wait for the last transaction to finish!')),
-      );
-      return;
-    }
     final d1 = double.tryParse(v1) ?? 0.0;
     final d2 = double.tryParse(v2) ?? 0.0;
     if (d1 < S.threshold || d2 < S.threshold) {
@@ -66,22 +58,71 @@ class _CoinScreenState extends State<CoinScreen> {
                 'Not enough $symbol2 to buy $symbol1: you need $d2 $symbol2 but you have $x $symbol2')),
       );
     } else {
-      setState(() {
-        _isLoading = true;
-      });
-      await FirestoreMethods.makeTransaction(
-        coinB: symbol1,
-        coinS: symbol2,
-        valueCoinB: double.tryParse(v1) ?? 0.0,
-        valueCoinS: double.tryParse(v2) ?? 0.0,
-      );
-      setState(() {
-        _isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Buy $symbol1 with $symbol2'),
             content: Text(
-                'Transaction succesfull: you bought $v1 $symbol1 with $v2 $symbol2')),
+                'Are you sure u want to buy $d1 $symbol1 with $d2 $symbol2?'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel')),
+              TextButton(
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Please wait'),
+                          content: SizedBox(
+                            height: 100,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                loadingCenterPadding(),
+                                const Text('Processing the transaction...'),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                    await FirestoreMethods.makeTransaction(
+                      coinB: symbol1,
+                      coinS: symbol2,
+                      valueCoinB: double.tryParse(v1) ?? 0.0,
+                      valueCoinS: double.tryParse(v2) ?? 0.0,
+                    );
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Transaction succesfull!'),
+                          content: Text(
+                              'You bought $v1 $symbol1 with $v2 $symbol2!'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Ok!')),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Text('Buy $symbol1')),
+            ],
+          );
+        },
       );
     }
   }
@@ -107,7 +148,7 @@ class _CoinScreenState extends State<CoinScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                          'You have: ${formatP(coin1)} ${coin.symbol} and ${formatP(coin2)} USD'),
+                          'You have: ${formatN(coin1)} ${coin.symbol} and ${formatN(coin2)} USD'),
                     ),
                     const Spacer(),
                     FavoriteButton(coinSymbol: coin.symbol),
@@ -128,14 +169,12 @@ class _CoinScreenState extends State<CoinScreen> {
                             coin2,
                           );
                         },
-                        child: _isLoading
-                            ? loadingCenter()
-                            : Column(
-                                children: [
-                                  Text('BUY ${coin.symbol}'),
-                                  const Text('SELL USD'),
-                                ],
-                              ),
+                        child: Column(
+                          children: [
+                            Text('BUY ${coin.symbol}'),
+                            const Text('SELL USD'),
+                          ],
+                        ),
                       ),
                       Expanded(
                         child: Padding(
@@ -181,14 +220,12 @@ class _CoinScreenState extends State<CoinScreen> {
                             coin1,
                           );
                         },
-                        child: _isLoading
-                            ? loadingCenter()
-                            : Column(
-                                children: [
-                                  Text('SELL ${coin.symbol}'),
-                                  const Text('BUY USD'),
-                                ],
-                              ),
+                        child: Column(
+                          children: [
+                            Text('SELL ${coin.symbol}'),
+                            const Text('BUY USD'),
+                          ],
+                        ),
                       ),
                     ],
                   ),

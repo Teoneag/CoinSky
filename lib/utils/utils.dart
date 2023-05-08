@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-String formatC(double d) {
-  return NumberFormat.compact().format(d);
-}
-
-String formatP(double d) {
+String formatN(double d) {
+  if (d.abs() < 1e-4) return '0';
   String s = NumberFormat.compact().format(d);
   return s.length > 6 ? s.substring(0, 7) : s;
 }
 
-String formatS(double d) {
-  String s = '${d}00000'.substring(0, 5);
-  if (s[s.length - 1] == '.') return s.substring(0, 4);
-  return s;
+String formatP(double d) {
+  if (d.abs() < 1e-5) return '0';
+  NumberFormat formatter = NumberFormat.compact();
+  formatter.maximumFractionDigits = 2;
+  return formatter.format(d);
 }
 
 const success = 'success';

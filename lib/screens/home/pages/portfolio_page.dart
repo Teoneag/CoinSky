@@ -39,7 +39,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
               return Padding(
                 padding: const EdgeInsets.only(left: 30),
                 child: Text(
-                  '≈ \$${snapshot.data}',
+                  '≈ \$${formatN(snapshot.data ?? 0.0)}',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               );

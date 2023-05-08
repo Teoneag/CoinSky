@@ -9,8 +9,8 @@ By Teodor Neagoe
 
 ## TO DO
 ### Urgent
-- Splash screen
 - refresh, and refresh after resetting wallet
+- check why the ballance isn't updateing
 
 ### Theme
 - add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye

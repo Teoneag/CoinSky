@@ -59,7 +59,7 @@ class _CoinsListState extends State<CoinsList> {
                       widget.type == CoinsListType.owned
                           ? Text('Your amount of this coin',
                               style: Theme.of(context).textTheme.bodyMedium)
-                          : Text('Coin',
+                          : Text('Nr   Coin',
                               style: Theme.of(context).textTheme.bodyMedium),
                     ],
                   )),
@@ -93,15 +93,15 @@ class _CoinsListState extends State<CoinsList> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: 170,
+                          width: 150,
                           child: Row(
                             children: [
-                              SizedBox(
-                                width: 40,
-                                child: coin.amount == null
-                                    ? Text('${index + 1}.')
-                                    : Text(formatC(coin.amount!)),
-                              ),
+                              coin.amount == null
+                                  ? Text('${index + 1}.')
+                                  : SizedBox(
+                                      width: 45,
+                                      child: Text(formatN(coin.amount!)),
+                                    ),
                               const SizedBox(width: 10),
                               CircleAvatar(
                                   backgroundImage: NetworkImage(coin.imageUrl)),
@@ -131,27 +131,32 @@ class _CoinsListState extends State<CoinsList> {
                         const SizedBox(width: 10),
                         Column(
                           children: [
-                            Text('\$${formatC(coin.marketCap)}'),
-                            Text('\$${formatC(coin.marketCap24h)}'),
+                            Text('\$${formatN(coin.marketCap)}'),
+                            Text('\$${formatN(coin.marketCap24h)}'),
                           ],
                         ),
                         const Spacer(),
                         Text(
-                          '\$${formatS(coin.price)}',
+                          '\$${formatN(coin.price)}',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(width: 15),
-                        Text(
-                          '${formatS(coin.priceChange24h)}%',
-                          style: TextStyle(
-                            color: coin.priceChange24h < 0
-                                ? Colors.red
-                                : Colors.green,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        const Spacer(),
+                        SizedBox(
+                          width: 58,
+                          child: Center(
+                            child: Text(
+                              '${formatP(coin.priceChange24h)}%',
+                              style: TextStyle(
+                                color: coin.priceChange24h < 0
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ],

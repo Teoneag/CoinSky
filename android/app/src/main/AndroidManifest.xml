@@ -4,6 +4,7 @@
         android:label="CoinSky"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        android:resource="@drawable/launch_background"
         <activity
             android:name=".MainActivity"
             android:exported="true"
