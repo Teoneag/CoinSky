@@ -11,13 +11,13 @@ By Teodor Neagoe
 ### Urgent
 - refresh, and refresh after resetting wallet
 - check why the ballance isn't updateing
-- handdle errors
 
 ### Theme
 - add the theme switch in the settings (3 options: dark, system default, white) + instead of white, use smth more easy on the eye
 - make the theme button from appBar animate: sun -> moon
 - color red, green and gray things that change
 - add the theme in the database
+- solve the icon for new phones that don't have circular icon
 - add loading screen + splash screen
 - delete the dot from the logo to make it centered when i need it
 ### General

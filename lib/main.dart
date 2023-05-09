@@ -14,23 +14,19 @@ import '/screens/loading_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isDarkTheme = prefs.getBool('isDarkTheme') ?? false;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeController(),
-      child: MyApp(
-        isDarkTheme: isDarkTheme,
-      ),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final bool isDarkTheme;
-  const MyApp({super.key, required this.isDarkTheme});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'CoinSky',
       theme: lightTheme1,
       darkTheme: darkTheme1,
-      themeMode: isDarkTheme ? ThemeMode.light : ThemeMode.dark,
+      themeMode: context.watch<ThemeController>().getThemeMode(),
       routes: routes,
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
