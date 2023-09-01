@@ -7,6 +7,16 @@ By Teodor Neagoe
 4. Fast and no bugs
 5. U can coppy trade like on etoro
 
+## How it looks now
+### Register & Login pages
+<img src="CoinSky_screenshots\register.jpeg" width="200"/> <img src="CoinSky_screenshots\register.jpeg" width="200"/>
+
+### Home & coin list page & drop down with settings
+<img src="CoinSky_screenshots\home screen.jpeg" width="200"/> <img src="CoinSky_screenshots\coin list.jpeg" width="200"/>
+
+### Buy page & buy pop ups
+<img src="CoinSky_screenshots\buy page.jpeg" width="200"/> <img src="CoinSky_screenshots\buy pop up.jpeg" width="200"/> <img src="CoinSky_screenshots\transaction succesful.jpeg" width="200"/>
+
 ## TO DO
 ### Urgent
 - refresh, and refresh after resetting wallet
