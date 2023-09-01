@@ -9,7 +9,7 @@ By Teodor Neagoe
 
 ## How it looks now
 ### Register & Login pages
-<img src="CoinSky_screenshots\register.jpeg" width="200"/> <img src="CoinSky_screenshots\register.jpeg" width="200"/>
+<img src="CoinSky_screenshots\register.jpeg" width="200"/> <img src="CoinSky_screenshots\log in.jpeg" width="200"/>
 
 ### Home & coin list page & drop down with settings
 <img src="CoinSky_screenshots\home screen.jpeg" width="200"/> <img src="CoinSky_screenshots\coin list.jpeg" width="200"/>
