@@ -1,5 +1,18 @@
 # CoinSky
-By Teodor Neagoe
+<div align = "center">
+<pre>
+ ██████╗ ██████╗ ██╗███╗   ██╗███████╗██╗  ██╗██╗   ██╗
+██╔════╝██╔═══██╗██║████╗  ██║██╔════╝██║ ██╔╝╚██╗ ██╔╝
+██║     ██║   ██║██║██╔██╗ ██║███████╗█████╔╝  ╚████╔╝ 
+██║     ██║   ██║██║██║╚██╗██║╚════██║██╔═██╗   ╚██╔╝  
+╚██████╗╚██████╔╝██║██║ ╚████║███████║██║  ██╗   ██║   
+ ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝   ╚═╝   
+-------------------------------------------------------
+A simple crypto app
+Featuring wallet, virtual portofolio and learning
+</pre>
+</div>
+
 ## Goals for this app
 1. A wallet, where u can do everything related to crypto: view, buy, sell, use leverage, learn
 2. As intuitive as possible
