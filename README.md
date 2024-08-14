@@ -31,6 +31,7 @@ Featuring wallet, virtual portofolio and learning
 
 ## TO DO
 ### Urgent
+- fix app icon + certificate
 - refresh, and refresh after resetting wallet
 - check why the ballance isn't updateing
 
